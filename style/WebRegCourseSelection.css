@@ -1,0 +1,105 @@
+/* Editing Course Selections */
+
+#planner>tbody>tr>td:nth-child(2){
+    padding-left: 42px;
+}
+
+/* Container not ugly af */
+#listingWrapper{
+    border: none;
+    background: white;
+    /* Full Length */
+    height: 745px;
+    /* Allow internal absolutes */
+    position: relative;
+}
+/* Remove excess spacing around selection content */
+div#listingWrapper #listing{
+    margin: 0;
+    width: 225px;
+}
+
+#listing ul, #listing h5{
+    /*display: none;*/
+}
+
+/* Hide Navigation */
+#breadcrumbs{
+    display: none;
+}
+
+/* Make the current title not ugly af */
+#currentlevel{
+    border:none;
+    background: none;
+    margin:0;
+    padding:0;
+    /* fuck it */
+    display: none;
+}
+
+/* Create Card Div*/
+p.message.center{
+    height: 0px;
+    border: none;
+    border-bottom: 1px solid rgb(194,194,194);
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    width: 100%;
+}
+
+/* Card Title for Courses */
+#courseAbbreviation {
+    font-weight: 300;
+    font-size: 32px;
+    color: rgb(27, 27, 27);
+    margin-bottom: 7px;
+}
+#courseName{
+    font-weight: 100;
+    font-size: 15px;
+    color: rgb(27, 27, 27);
+    margin-bottom: 7px;
+}
+
+/* Generated lecture section listings */
+.sectionListing{
+    color: rgb(27, 27, 27);
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-weight: 300;
+    cursor: pointer;
+}
+.sectionListing .sectionLocation{
+    color: rgb(82, 82, 82);
+    float: left;
+    font-size: 0.8em;
+}
+.sectionListing .sectionLetter{
+    color: rgb(82, 82, 82);
+    float: right;
+    font-size: 0.8em;
+}
+.sectionListing .sectionTeacher{
+    font-size: 1.7em;
+    padding: 5px 0;
+}
+.sectionListing .sectionDays{
+    float: left;
+    font-size: 1.3em;
+    border-right: 1px solid rgb(82, 82, 82);
+    padding-right: 11px;
+}
+.sectionListing .sectionTime{
+    color: rgb(82, 82, 82);
+    float: left;
+    font-size: 1.3em;
+    padding-left: 11px;
+}
+.sectionListing .sectionTime .fa{
+    color: rgb(82, 82, 82);
+    font-size: 0.7em;
+    position: relative;
+    top: -1px;
+}
