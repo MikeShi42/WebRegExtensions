@@ -11,23 +11,35 @@ function CourseSelection(){
     //Watch for "Current Level" Changes
     watchDOMMutation(jQuery('#listing')[0], function(mutation){
         var currentState = getState();
+        var currentInformation = getCurrentInformation();
+
+
+        //Title card at state 2
 
         //Only execute if there is a state change
         if(currentState != lastState){
 
-            console.log(getCurrentInformation());
+            console.log(currentState);
+            console.log(currentInformation);
 
             lastState = currentState;
 
-            formatCourseTitle();
+            formatCourseTitle(currentState, currentInformation);
+
             switch(currentState){
                 case 2:
                     formatSectionListings();
                     break;
                 case 3:
                     formatSubSectionListings();
+                    break;
                 default:
                     break;
+            }
+        }else{
+            //Card title got overwritten but no state was changed
+            if(jQuery('#cardTitle').length == 0){
+                formatCourseTitle(currentState, currentInformation);
             }
         }
     },{characterData: true, childList: true});
@@ -70,15 +82,17 @@ function formatSubSectionListings(){
 
                 '<div style="clear:both;"></div>' +
             ' </div>' +
-                //The message center classes have essentially become a full width line for us
+            //The message center classes have essentially become a full width line for us
             '<p class="message center"></p>';
     }
 
-    jQuery(sectionListingsHTML).insertAfter('#listingWrapper .message');
+    jQuery(sectionListingsHTML).insertAfter('#cardTitle');
 }
 
 /* Create the section listing elements from the parsed data */
 function formatSectionListings(){
+
+    console.log('11');
     var listingChildren = jQuery("#listing").children();
     var firstSectionOption = 9999;
 
@@ -124,37 +138,105 @@ function formatSectionListings(){
             '<p class="message center"></p>';
     }
 
-    jQuery(sectionListingsHTML).insertAfter('#listingWrapper .message');
+    jQuery(sectionListingsHTML).insertAfter('#cardTitle');
 }
 
 //Format the course title
-function formatCourseTitle(){
-    var currentState = getState();
+function formatCourseTitle(currentState, currentInfo){
+    //Only display custom course title card if there is enough information
 
-    //Get the current level text
-    var courseFullName = jQuery('#currentlevel h4').text();
-
-    //Bail if it's not a course title
-    if(courseFullName.indexOf(':') == -1)
-        return;
-
-    //Split up the current level text to course abbrv and course name
-    var courseFullNameArray = courseFullName.split(': ');
-    var courseAbbreviation = courseFullNameArray[0];
-    var courseName = courseFullNameArray[1];
-
-    if(jQuery('#cardTitle').length == 0){
-        jQuery('#currentlevel').after(
+    console.log(',', currentState);
+    if(currentState >= 2){
+        var courseTitleCardHTML =
             '<div id="cardTitle">' +
-                '<div id="courseAbbreviation"></div>' +
-                '<div id="courseName"></div>' +
-            '</div>'
-        );
-    }
+                '<div class="courseAbbreviation">' + currentInfo.courseAbbreviation + '</div>';
+        if(currentState == 2)
+            courseTitleCardHTML +=
+                '<div class="courseName">' + currentInfo.courseName + '</div>' +
+                '<p class="message center"></p>';
+        if(currentState > 2){
+            courseTitleCardHTML +=
+                '<div class="courseProfessor">' +
+                    (currentInfo.professorName.first? currentInfo.professorName.first[0] + '. ':'') +
+                    currentInfo.professorName.last +
+                '</div>' +
+                //Division Line
+                //'<p class="message center"></p>' +
+                //Current Section Information
+                '<div class="courseSection">' +
+                    '<div class="sectionLetter">' + currentInfo.sectionType + ' ' + currentInfo.sectionLetter + '</div>' +
+                    '<div class="changeSectionButton" title="Change ' + currentInfo.sectionType + '"><i class="fa fa-pencil-square-o"></i></div>' +
 
-    //Set the text to the newly created current level
-    jQuery('#courseAbbreviation').text(courseAbbreviation);
-    jQuery('#courseName').text(courseName);
+                    '<div style="clear:both;"></div>' +
+
+                    '<div class="sectionDays">' + currentInfo.sectionDays + '</div>' +
+
+                    '<div class="sectionTime">' +
+                        currentInfo.sectionTimes.start.split(' ')[0] + '&nbsp; <i class="fa fa-long-arrow-right"></i> &nbsp;' +
+                        currentInfo.sectionTimes.end +
+                    '</div>' +
+
+
+                    '<div style="clear:both;"></div>' +
+
+                    '<div class="sectionLocation">' + currentInfo.sectionLocation + '</div>' +
+
+                '</div>';
+
+                if(currentState == 3 && !currentInfo.finalSectionDate)
+                    courseTitleCardHTML += '<p class="message center"></p>';
+        }
+        if(currentState > 3){
+            courseTitleCardHTML +=
+                '<div class="courseSection">' +
+                    '<div class="sectionLetter">' + currentInfo.subSectionType + ' ' + currentInfo.sectionLetter + currentInfo.sectionNumber + '</div>' +
+                    '<div class="changeSectionButton" title="Change ' + currentInfo.subSectionType + '"><i class="fa fa-pencil-square-o"></i></div>' +
+
+                    '<div style="clear:both;"></div>' +
+
+                    '<div class="sectionDays">' + currentInfo.subSectionDays + '</div>' +
+
+                    '<div class="sectionTime">' +
+                        currentInfo.subSectionTimes.start.split(' ')[0] + '&nbsp; <i class="fa fa-long-arrow-right"></i> &nbsp;' +
+                        currentInfo.subSectionTimes.end +
+                    '</div>' +
+
+
+                    '<div style="clear:both;"></div>' +
+
+                    '<div class="sectionLocation">' + currentInfo.subSectionLocation + '</div>' +
+
+                '</div>';
+        }
+
+        //If final information is already available
+        if(currentInfo.finalSectionDate){
+            courseTitleCardHTML +=
+                '<div class="courseSection">' +
+                    '<div class="sectionLetter">' + currentInfo.finalSectionType + '</div>' +
+
+                    '<div class="sectionDate">' + currentInfo.finalSectionDate + '</div>' +
+
+                    '<div style="clear:both;"></div>' +
+
+                    '<div class="sectionDays">' + currentInfo.finalSectionDay.substr(0,3) + '</div>' +
+
+                    '<div class="sectionTime">' +
+                        currentInfo.finalSectionTimes.start.split(' ')[0] + '&nbsp; <i class="fa fa-long-arrow-right"></i> &nbsp;' +
+                        currentInfo.finalSectionTimes.end +
+                    '</div>' +
+
+                    '<div style="clear:both;"></div>' +
+
+                    '<div class="sectionLocation">' + 'TBA' + '</div>' +
+
+                '</div>';
+        }
+
+        courseTitleCardHTML += '</div>';
+
+        jQuery('#currentlevel').after(courseTitleCardHTML);
+    }
 }
 
 /**
@@ -291,8 +373,12 @@ function getCurrentInformation(){
         case 3:
             finalSectionType = h5s.eq(2).find('span.instructiontype').attr('title');
         case 2:
-            sectionNumber = h5s.eq(1).text().substr(1,2);
-            subSectionType = h5s.eq(1).find('span.instructiontype').attr('title');
+            if(h5s.eq(1).text().indexOf('Final') != -1){
+                finalSectionType = "Final";
+            }else{
+                sectionNumber = h5s.eq(1).text().substr(1,2);
+                subSectionType = h5s.eq(1).find('span.instructiontype').attr('title');
+            }
         case 1:
             sectionLetter = h5s.eq(0).text()[0];
             sectionType = h5s.eq(0).find('span.instructiontype').attr('title');
@@ -306,7 +392,8 @@ function getCurrentInformation(){
         case 2:
             var infoItems = courseInfos.eq(1).find('li');
             /* Get the sub-section details */
-            var subSectionDetails = getSectionDetails(infoItems.eq(0));
+            //Use infoItems.last() because sometimes there is a "TA" name for the first LI
+            var subSectionDetails = getSectionDetails(infoItems.last());
 
             //Set our variables
             subSectionLocation = subSectionDetails.sectionLocation;

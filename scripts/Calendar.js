@@ -31,7 +31,6 @@ function setUpPlanners(){
         planners.each(function(){
             jQuery('#calendarWrapper.card').prepend('<a class="plannerLink" href="'+jQuery(this).attr('href')+'">'+jQuery(this).text()+'</a>')
         });
-
     });
 }
 

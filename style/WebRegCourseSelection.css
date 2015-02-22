@@ -49,20 +49,6 @@ p.message.center{
     width: 100%;
 }
 
-/* Card Title for Courses */
-#courseAbbreviation {
-    font-weight: 300;
-    font-size: 32px;
-    color: rgb(27, 27, 27);
-    margin-bottom: 7px;
-}
-#courseName{
-    font-weight: 100;
-    font-size: 15px;
-    color: rgb(27, 27, 27);
-    margin-bottom: 7px;
-}
-
 /* Generated lecture section listings */
 .sectionListing{
     color: rgb(27, 27, 27);
@@ -72,18 +58,18 @@ p.message.center{
     cursor: pointer;
 }
 .sectionListing .sectionLocation{
-    color: rgb(82, 82, 82);
     float: left;
+    color: rgb(82, 82, 82);
     font-size: 0.8em;
 }
 .sectionListing .sectionLetter{
-    color: rgb(82, 82, 82);
     float: right;
+    color: rgb(82, 82, 82);
     font-size: 0.8em;
 }
 .sectionListing .sectionTeacher{
-    font-size: 1.7em;
     padding: 5px 0;
+    font-size: 1.7em;
 }
 .sectionListing .sectionDays{
     float: left;
@@ -92,14 +78,93 @@ p.message.center{
     padding-right: 11px;
 }
 .sectionListing .sectionTime{
-    color: rgb(82, 82, 82);
     float: left;
+    color: rgb(82, 82, 82);
     font-size: 1.3em;
     padding-left: 11px;
 }
 .sectionListing .sectionTime .fa{
-    color: rgb(82, 82, 82);
-    font-size: 0.7em;
     position: relative;
     top: -1px;
+    font-size: 0.7em;
+    color: rgb(82, 82, 82);
+}
+
+/* cardTitle Section Information */
+#cardTitle{
+
+}
+/* CSE12 */
+#cardTitle .courseAbbreviation {
+    font-weight: 300;
+    font-size: 32px;
+    color: rgb(27, 27, 27);
+    margin-bottom: 7px;
+}
+/* Data Structs & OO Design */
+#cardTitle .courseName{
+    font-weight: 100;
+    font-size: 15px;
+    color: rgb(27, 27, 27);
+    margin-bottom: 7px;
+}
+/* Data Structs & OO Design */
+#cardTitle .courseProfessor{
+    font-weight: 100;
+    font-size: 15px;
+    color: rgb(27, 27, 27);
+    margin-bottom: 7px;
+}
+/* Container for the section information */
+#cardTitle .courseSection{
+    margin-top: 20px;
+    /* Hacky af for the bottom border */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+/* Lecture A */
+#cardTitle .courseSection .sectionLetter{
+    float: left;
+    font-size: 0.8em;
+    font-weight: 100;
+    color: rgb(82, 82, 82);
+}
+/* Little pencil icon to change lecture */
+#cardTitle .courseSection .changeSectionButton{
+    float: right;
+    font-size: 1em;
+    color: #0091EA;
+    cursor: pointer;
+    display: none;
+}
+/* MWF */
+#cardTitle .courseSection .sectionDays{
+    float: left;
+    padding-right: 11px;
+    margin: 5px 0;
+    border-right: 1px solid rgb(82, 82, 82);
+    font-size: 1.3em;
+    font-weight: 300;
+}
+/* Final Date ex. June 05, 2015 */
+#cardTitle .courseSection .sectionDate{
+    float: right;
+    color: rgb(82, 82, 82);
+    font-size: 0.8em;
+    font-weight: 100;
+}
+/* 8:00 -> 8:50 AM */
+#cardTitle .courseSection .sectionTime{
+    float: left;
+    padding-left: 11px;
+    margin: 5px 0;
+    font-size: 1.3em;
+    font-weight: 300;
+}
+/* Pepper Canyon - 111 */
+#cardTitle .courseSection .sectionLocation{
+    font-size: 0.8em;
+    font-weight: 100;
+    color: rgb(82, 82, 82);
+    margin-bottom: 5px;
 }

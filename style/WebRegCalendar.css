@@ -88,3 +88,9 @@
 .days a{
     display: none;
 }
+
+
+div#modalDialog{
+    top: 45% !important;
+    left: 45% !important;
+}
