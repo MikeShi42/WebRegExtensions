@@ -287,7 +287,7 @@ function getCurrentInformation(){
 
     var h5s = currentLevel.find('h5');
     //Get more information as more information gets appended
-    switch(h5s.toArray().length){
+    switch(h5s.length){
         case 3:
             finalSectionType = h5s.eq(2).find('span.instructiontype').attr('title');
         case 2:
@@ -302,7 +302,7 @@ function getCurrentInformation(){
     }
 
     var courseInfos = currentLevel.find('ul.courseinfo');
-    switch(courseInfos.toArray().length){
+    switch(courseInfos.length){
         case 2:
             var infoItems = courseInfos.eq(1).find('li');
             /* Get the sub-section details */
@@ -455,8 +455,7 @@ function parseTimeString(timeString){
 
 //Returns the current state of the course listing panel by examining the breadcrumbs hierarchy
 function getState(){
-    var breadCrumbs = jQuery('#breadcrumbs').find('a').toArray();
-    return breadCrumbs.length;
+    return jQuery('#breadcrumbs').find('a').length;
 }
 
 //Go back 1 state link using the breadcrumbs
